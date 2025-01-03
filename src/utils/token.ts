@@ -5,7 +5,6 @@ import secrets from "../config/secret";
 type User = {
   name: string;
   email: string;
-  role: string;
 };
 
 // generate jwt token
@@ -13,7 +12,6 @@ export const generateToken = (user: Partial<User>) => {
   const payload = {
     name: user.name,
     email: user.email,
-    role: user.role,
   };
 
   const token = jwt.sign(payload, secrets.jwt_secret, {
@@ -47,7 +45,7 @@ export const getBearerToken = async (req: Request) => {
     } else {
       throw new Error("Token is unavailable");
     }
-  } catch (err) {
+  } catch (err:any) {
     return err;
   }
 };
