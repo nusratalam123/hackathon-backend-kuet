@@ -4,7 +4,9 @@
     "module": "commonjs",
     "outDir": "./dist",
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
+    "typeRoots": ["./node_modules/@types", "./types"],
     "strict": true,
     "skipLibCheck": true
   },

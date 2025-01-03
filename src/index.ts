@@ -1,27 +1,53 @@
 import "dotenv/config";
-import express from "express";
-import jwt from "jsonwebtoken";
+import express, { NextFunction, Request, Response } from "express";
 import connectDB from "./config/db";
 import secrets from "./config/secret";
-import Blacklist from "./model/blacklist.model";
 import middleware from "./shared/middleware";
 import routes from "./shared/route";
-import { getBearerToken, verifyToken } from "./utils/token";
-import bodyParser from "body-parser";
+import logger from "node-color-log";
 
 const app = express();
 const PORT = secrets.PORT;
 
-// Middleware to parse JSON data
-app.use(bodyParser.json());
+// welcome message
+app.get("/", async (_, res) => {
+  res.send("Welcome to API");
+});
 
-// Optionally, if you need to handle URL-encoded form data
-app.use(bodyParser.urlencoded({ extended: true }));
+// implement middleware
+app.use(middleware);
+
+app.use((req, res, next) => {
+  let send = res.send;
+  res.send = c => {
+    logger.color('blue').bgColor('black')
+      .bold().dim().reverse().log(req.body);
+
+    logger.color('yellow').bgColor('black')
+      .bold().dim().reverse().log(c);
+    //console.log(`Code: ${res.statusCode}`);
+
+    res.send = send;
+    return res.send(c);
+  }
+  next();
+});
+
 // connect to database
 connectDB();
 
 // define routes
 app.use("/api/v1", routes);
+
+// catch global error
+app.use((error: any, _req: Request, res: Response, _: NextFunction) => {
+  logger.color('red').bgColor('black')
+    .bold().dim().reverse().log(error.message);
+
+  res.status(error.statusCode || 400).json({
+    message: error.message,
+  });
+});
 
 // listen to port
 app.listen(PORT, () => {
