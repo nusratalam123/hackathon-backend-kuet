@@ -1,7 +1,5 @@
 import { Router } from "express";
 
-import recipeRoutes from "../routes/recipe.route";
-import ingredientRoutes from "../routes/ingredient.route";
 import chatbotRoutes from "../routes/chatbot.route";
 import textRoutes from "../routes/textGeneration.route";
 import authRoutes from "../routes/auth.route";
@@ -20,8 +18,6 @@ router.get("/", (_, res) => {
 
 router.use("/auth", authRoutes);
 router.use("/chat", chatbotRoutes);
-router.use("/recipe", recipeRoutes);
-router.use("/ingredient", ingredientRoutes);
 router.use("/text", textRoutes);
 
 

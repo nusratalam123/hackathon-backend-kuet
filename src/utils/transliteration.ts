@@ -1,4 +1,4 @@
-import axios from "axios";
+
 
 // URL to fetch the Bangla word list
 const BANGla_WORDS_URL =
