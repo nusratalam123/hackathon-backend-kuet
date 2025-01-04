@@ -4,6 +4,7 @@ import mongoose, { Schema, Document , ObjectId} from "mongoose";
 export interface ITranslation extends Document {
   userId:String;  
   email: string;
+  name: string;
   banglishText: string;
   banglaText: string;
   textFilePath: string; // Store local file path for download
@@ -15,6 +16,7 @@ export interface ITranslation extends Document {
 const TranslationSchema: Schema = new Schema({
   userId: { String },  
   email: { type: String},
+  name: { type: String },
   banglishText: { type: String, required: true },
   banglaText: { type: String, required: true },
   pdfFilePath: { type: String },
